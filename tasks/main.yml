@@ -3,9 +3,9 @@
 
 - name: install anyenv
   git:
-    repo:    "{{ anyenv_repo    | default('https://github.com/riywo/anyenv') }}"
-    dest:    "{{ anyenv_root    | default('/opt/anyenv') }}"
-    version: "{{ anyenv_version | default('HEAD') }}"
+    repo:    "{{ anyenv_repo }}"
+    dest:    "{{ anyenv_root }}"
+    version: "{{ anyenv_version }}"
     accept_hostkey: yes
   tags: [anyenv]
 
@@ -24,10 +24,10 @@
   tags: [anyenv]
 
 - name: install xxenv
-  shell: "ANYENV_ROOT={{ anyenv_root | default('/opt/anyenv') }} {{ anyenv_root | default('/opt/anyenv') }}/bin/anyenv install {{ item }}"
+  shell: "ANYENV_ROOT={{ anyenv_root }} {{ anyenv_root }}/bin/anyenv install {{ item }}"
   args:
-    creates: "{{ anyenv_root | default('/opt/anyenv') }}/envs/{{ item }}"
+    creates: "{{ anyenv_root }}/envs/{{ item }}"
   changed_when: false
-  with_items: "{{ install_env }}"
+  with_items: "{{ anyenv_install_envs }}"
   tags: [anyenv]
 
