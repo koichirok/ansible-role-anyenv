@@ -17,3 +17,10 @@
     mode: "{{ anyenv_shims_mode }}"
     owner: "{{ anyenv_shims_owner }}"
     group: "{{ anyenv_shims_group }}"
+
+- name: install xxenv's dependencies
+  package:
+    name: "{{ lookup('vars', varname) }}"
+  vars:
+    varname: "{{ 'anyenv_%s_deps'|format(xxenv) }}"
+  when: lookup('varnames', varname) | length > 0
