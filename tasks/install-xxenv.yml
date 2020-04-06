@@ -1,0 +1,19 @@
+---
+# loop_vars: xxenv
+- name: install xxenv
+  shell: |
+    . /etc/profile.d/anyenv.sh
+    {{ anyenv_root }}/bin/anyenv install {{ xxenv }}
+  args:
+    creates: "{{ anyenv_root }}/envs/{{ xxenv }}"
+    executable: /bin/bash
+  changed_when: false
+  tags: [anyenv]
+
+- name: ensure shims directory is world writable
+  file:
+    path: "{{ anyenv_root }}/envs/{{ xxenv }}/shims"
+    state: directory
+    mode: "{{ anyenv_shims_mode }}"
+    owner: "{{ anyenv_shims_owner }}"
+    group: "{{ anyenv_shims_group }}"

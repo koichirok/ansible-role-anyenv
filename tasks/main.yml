@@ -18,16 +18,20 @@
     mode:  0755
   tags: [anyenv]
 
-- name: force init. for docker?
-  shell: /etc/profile.d/anyenv.sh
+- name: init anyenv
+  shell: |
+    . /etc/profile.d/anyenv.sh
+    {{ anyenv_root }}/bin/anyenv install --force-init
+  args:
+    creates: "{{ anyenv_definition_root }}"
+    executable: /bin/bash
   changed_when: false
   tags: [anyenv]
 
 - name: install xxenv
-  shell: "ANYENV_ROOT={{ anyenv_root }} {{ anyenv_root }}/bin/anyenv install {{ item }}"
-  args:
-    creates: "{{ anyenv_root }}/envs/{{ item }}"
-  changed_when: false
-  with_items: "{{ anyenv_install_envs }}"
+  include: install-xxenv.yml
+  loop: "{{ anyenv_install_envs }}"
+  loop_control:
+    loop_var: xxenv
+    label: "{{ xxenv }}"
   tags: [anyenv]
-

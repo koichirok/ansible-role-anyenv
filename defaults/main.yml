@@ -1,10 +1,16 @@
 ---
 # defaults file for ansible-role-anyenv
 anyenv_repo:    'https://github.com/riywo/anyenv'
-anyenv_root:    '/opt/anyenv'
 anyenv_version: 'HEAD'
+
+anyenv_root: '/opt/anyenv'
+anyenv_definition_root: '/opt/anyenv/.config/anyenv-install'
 
 # see: https://github.com/riywo/anyenv/blob/master/README.md#usage
 anyenv_install_envs:
   - pyenv
   - rbenv
+
+anyenv_shims_mode: "0777"
+anyenv_shims_owner: "root"
+anyenv_shims_group: "root"
