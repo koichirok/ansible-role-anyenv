@@ -12,11 +12,19 @@
 - name: add profile
   template:
     src:   anyenv.sh.j2
-    dest:  /etc/profile.d/anyenv.sh
+    dest:  "{{ anyenv_profile_file }}"
     owner: root
     group: root
     mode:  0755
   tags: [anyenv]
+
+- name: add code to load profile
+  blockinfile:
+    path: "{{ anyenv_zprofile_path }}"
+    marker: "# {mark} ANSIBLE koichirok.anyenv role MANAGED BLOCK"
+    block: |
+      . {{ anyenv_profile_file }}
+    validate: zsh -n %s
 
 - name: init anyenv
   shell: |

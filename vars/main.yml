@@ -1,6 +1,9 @@
 ---
 # vars file for ansible-role-anyenv
 
+anyenv_profile_file: '/etc/profile.d/anyenv.sh'
+anyenv_zprofile_path: '/etc/zsh/zprofile'
+
 anyenv_pyenv_deps:
   - git
   - gcc
